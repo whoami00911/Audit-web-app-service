@@ -1,0 +1,54 @@
+syntax= "proto3";
+
+package grpcPb;
+option go_package = "/pkg/grpcPb";
+
+import "google/protobuf/timestamp.proto";
+
+message LogRequest{
+    enum Actions{
+        SignUp = 0;
+        SignIn = 1;
+        Logout = 2;
+        Upload = 3;
+    }
+
+    enum Methods{
+        GET = 0;
+        PUT = 1;
+        POST = 2;
+        DELETE = 3;
+    }
+
+    Actions action = 1;
+    Methods method = 2;
+    int32 userId = 3;
+    repeated string objectId = 4;
+    string url = 5;
+    google.protobuf.Timestamp timestamp =  6;
+}
+
+message LogResponce{
+    bool status = 1;
+}
+
+message GinLogRequest{
+    google.protobuf.Timestamp timestamp = 1;
+    int32 statusCode = 2;
+    string latency = 3;
+    string clientIp = 4;
+    string method = 5;
+    string path = 6;
+    string userAgent = 7;
+}
+
+message GinLogResponce{
+    bool status = 1;
+}
+
+service LogService{
+    rpc Log(LogRequest) returns (LogResponce);
+    rpc GinLog(GinLogRequest) returns (GinLogResponce);
+}
+
+
