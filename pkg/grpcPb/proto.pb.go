@@ -25,10 +25,14 @@ const (
 type LogRequest_Actions int32
 
 const (
-	LogRequest_SignUp LogRequest_Actions = 0
-	LogRequest_SignIn LogRequest_Actions = 1
-	LogRequest_Logout LogRequest_Actions = 2
-	LogRequest_Upload LogRequest_Actions = 3
+	LogRequest_SignUp       LogRequest_Actions = 0
+	LogRequest_SignIn       LogRequest_Actions = 1
+	LogRequest_Logout       LogRequest_Actions = 2
+	LogRequest_Upload       LogRequest_Actions = 3
+	LogRequest_Get_files    LogRequest_Actions = 4
+	LogRequest_Get_file     LogRequest_Actions = 5
+	LogRequest_Delete_file  LogRequest_Actions = 6
+	LogRequest_Delete_files LogRequest_Actions = 7
 )
 
 // Enum value maps for LogRequest_Actions.
@@ -38,12 +42,20 @@ var (
 		1: "SignIn",
 		2: "Logout",
 		3: "Upload",
+		4: "Get_files",
+		5: "Get_file",
+		6: "Delete_file",
+		7: "Delete_files",
 	}
 	LogRequest_Actions_value = map[string]int32{
-		"SignUp": 0,
-		"SignIn": 1,
-		"Logout": 2,
-		"Upload": 3,
+		"SignUp":       0,
+		"SignIn":       1,
+		"Logout":       2,
+		"Upload":       3,
+		"Get_files":    4,
+		"Get_file":     5,
+		"Delete_file":  6,
+		"Delete_files": 7,
 	}
 )
 
@@ -394,7 +406,7 @@ var File_proto_proto_proto protoreflect.FileDescriptor
 
 const file_proto_proto_proto_rawDesc = "" +
 	"\n" +
-	"\x11proto/proto.proto\x12\x06grpcPb\x1a\x1fgoogle/protobuf/timestamp.proto\"\xe2\x02\n" +
+	"\x11proto/proto.proto\x12\x06grpcPb\x1a\x1fgoogle/protobuf/timestamp.proto\"\xa2\x03\n" +
 	"\n" +
 	"LogRequest\x122\n" +
 	"\x06action\x18\x01 \x01(\x0e2\x1a.grpcPb.LogRequest.ActionsR\x06action\x122\n" +
@@ -402,7 +414,7 @@ const file_proto_proto_proto_rawDesc = "" +
 	"\x06userId\x18\x03 \x01(\x05R\x06userId\x12\x1a\n" +
 	"\bobjectId\x18\x04 \x03(\tR\bobjectId\x12\x10\n" +
 	"\x03url\x18\x05 \x01(\tR\x03url\x128\n" +
-	"\ttimestamp\x18\x06 \x01(\v2\x1a.google.protobuf.TimestampR\ttimestamp\"9\n" +
+	"\ttimestamp\x18\x06 \x01(\v2\x1a.google.protobuf.TimestampR\ttimestamp\"y\n" +
 	"\aActions\x12\n" +
 	"\n" +
 	"\x06SignUp\x10\x00\x12\n" +
@@ -411,7 +423,11 @@ const file_proto_proto_proto_rawDesc = "" +
 	"\n" +
 	"\x06Logout\x10\x02\x12\n" +
 	"\n" +
-	"\x06Upload\x10\x03\"1\n" +
+	"\x06Upload\x10\x03\x12\r\n" +
+	"\tGet_files\x10\x04\x12\f\n" +
+	"\bGet_file\x10\x05\x12\x0f\n" +
+	"\vDelete_file\x10\x06\x12\x10\n" +
+	"\fDelete_files\x10\a\"1\n" +
 	"\aMethods\x12\a\n" +
 	"\x03GET\x10\x00\x12\a\n" +
 	"\x03PUT\x10\x01\x12\b\n" +

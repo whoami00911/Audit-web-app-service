@@ -11,6 +11,10 @@ message LogRequest{
         SignIn = 1;
         Logout = 2;
         Upload = 3;
+        Get_files = 4;
+        Get_file = 5;
+        Delete_file = 6;
+        Delete_files = 7;
     }
 
     enum Methods{
