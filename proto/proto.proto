@@ -15,6 +15,7 @@ message LogRequest{
         Get_file = 5;
         Delete_file = 6;
         Delete_files = 7;
+        Show_page = 8;
     }
 
     enum Methods{
@@ -27,9 +28,13 @@ message LogRequest{
     Actions action = 1;
     Methods method = 2;
     int32 userId = 3;
-    repeated string objectId = 4;
+    optional massive objectId = 4;
     string url = 5;
     google.protobuf.Timestamp timestamp =  6;
+}
+
+message massive{
+    repeated string objectId = 1;
 }
 
 message LogResponce{

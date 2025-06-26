@@ -30,13 +30,14 @@ func (s *Service) Log(ctx context.Context, req *grpcPb.LogRequest) (logEntities.
 		Action:    req.GetAction().String(),
 		Method:    req.GetMethod().String(),
 		UserId:    int(req.GetUserId()),
-		ObjectId:  req.ObjectId,
+		ObjectId:  req.ObjectId.ObjectId,
 		Url:       req.Url,
 		Timestamp: req.GetTimestamp().AsTime(),
 	}
 
 	status, err := s.Logging.Log(ctx, log)
 	if err != nil {
+		s.logger.Error(err)
 		return logEntities.Status{
 			Status: status.Status,
 		}, err
@@ -44,7 +45,7 @@ func (s *Service) Log(ctx context.Context, req *grpcPb.LogRequest) (logEntities.
 
 	return logEntities.Status{
 		Status: status.Status,
-	}, err
+	}, nil
 }
 
 func (s *Service) GinLog(ctx context.Context, req *grpcPb.GinLogRequest) (logEntities.Status, error) {
@@ -60,6 +61,7 @@ func (s *Service) GinLog(ctx context.Context, req *grpcPb.GinLogRequest) (logEnt
 
 	status, err := s.Logging.GinLog(ctx, ginLog)
 	if err != nil {
+		s.logger.Error(err)
 		return logEntities.Status{
 			Status: status.Status,
 		}, err
@@ -67,5 +69,5 @@ func (s *Service) GinLog(ctx context.Context, req *grpcPb.GinLogRequest) (logEnt
 
 	return logEntities.Status{
 		Status: status.Status,
-	}, err
+	}, nil
 }

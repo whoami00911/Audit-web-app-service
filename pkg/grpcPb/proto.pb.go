@@ -33,6 +33,7 @@ const (
 	LogRequest_Get_file     LogRequest_Actions = 5
 	LogRequest_Delete_file  LogRequest_Actions = 6
 	LogRequest_Delete_files LogRequest_Actions = 7
+	LogRequest_Show_page    LogRequest_Actions = 8
 )
 
 // Enum value maps for LogRequest_Actions.
@@ -46,6 +47,7 @@ var (
 		5: "Get_file",
 		6: "Delete_file",
 		7: "Delete_files",
+		8: "Show_page",
 	}
 	LogRequest_Actions_value = map[string]int32{
 		"SignUp":       0,
@@ -56,6 +58,7 @@ var (
 		"Get_file":     5,
 		"Delete_file":  6,
 		"Delete_files": 7,
+		"Show_page":    8,
 	}
 )
 
@@ -143,7 +146,7 @@ type LogRequest struct {
 	Action        LogRequest_Actions     `protobuf:"varint,1,opt,name=action,proto3,enum=grpcPb.LogRequest_Actions" json:"action,omitempty"`
 	Method        LogRequest_Methods     `protobuf:"varint,2,opt,name=method,proto3,enum=grpcPb.LogRequest_Methods" json:"method,omitempty"`
 	UserId        int32                  `protobuf:"varint,3,opt,name=userId,proto3" json:"userId,omitempty"`
-	ObjectId      []string               `protobuf:"bytes,4,rep,name=objectId,proto3" json:"objectId,omitempty"`
+	ObjectId      *Massive               `protobuf:"bytes,4,opt,name=objectId,proto3,oneof" json:"objectId,omitempty"`
 	Url           string                 `protobuf:"bytes,5,opt,name=url,proto3" json:"url,omitempty"`
 	Timestamp     *timestamppb.Timestamp `protobuf:"bytes,6,opt,name=timestamp,proto3" json:"timestamp,omitempty"`
 	unknownFields protoimpl.UnknownFields
@@ -201,7 +204,7 @@ func (x *LogRequest) GetUserId() int32 {
 	return 0
 }
 
-func (x *LogRequest) GetObjectId() []string {
+func (x *LogRequest) GetObjectId() *Massive {
 	if x != nil {
 		return x.ObjectId
 	}
@@ -222,6 +225,50 @@ func (x *LogRequest) GetTimestamp() *timestamppb.Timestamp {
 	return nil
 }
 
+type Massive struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	ObjectId      []string               `protobuf:"bytes,1,rep,name=objectId,proto3" json:"objectId,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *Massive) Reset() {
+	*x = Massive{}
+	mi := &file_proto_proto_proto_msgTypes[1]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *Massive) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Massive) ProtoMessage() {}
+
+func (x *Massive) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_proto_proto_msgTypes[1]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Massive.ProtoReflect.Descriptor instead.
+func (*Massive) Descriptor() ([]byte, []int) {
+	return file_proto_proto_proto_rawDescGZIP(), []int{1}
+}
+
+func (x *Massive) GetObjectId() []string {
+	if x != nil {
+		return x.ObjectId
+	}
+	return nil
+}
+
 type LogResponce struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Status        bool                   `protobuf:"varint,1,opt,name=status,proto3" json:"status,omitempty"`
@@ -231,7 +278,7 @@ type LogResponce struct {
 
 func (x *LogResponce) Reset() {
 	*x = LogResponce{}
-	mi := &file_proto_proto_proto_msgTypes[1]
+	mi := &file_proto_proto_proto_msgTypes[2]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -243,7 +290,7 @@ func (x *LogResponce) String() string {
 func (*LogResponce) ProtoMessage() {}
 
 func (x *LogResponce) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_proto_proto_msgTypes[1]
+	mi := &file_proto_proto_proto_msgTypes[2]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -256,7 +303,7 @@ func (x *LogResponce) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use LogResponce.ProtoReflect.Descriptor instead.
 func (*LogResponce) Descriptor() ([]byte, []int) {
-	return file_proto_proto_proto_rawDescGZIP(), []int{1}
+	return file_proto_proto_proto_rawDescGZIP(), []int{2}
 }
 
 func (x *LogResponce) GetStatus() bool {
@@ -281,7 +328,7 @@ type GinLogRequest struct {
 
 func (x *GinLogRequest) Reset() {
 	*x = GinLogRequest{}
-	mi := &file_proto_proto_proto_msgTypes[2]
+	mi := &file_proto_proto_proto_msgTypes[3]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -293,7 +340,7 @@ func (x *GinLogRequest) String() string {
 func (*GinLogRequest) ProtoMessage() {}
 
 func (x *GinLogRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_proto_proto_msgTypes[2]
+	mi := &file_proto_proto_proto_msgTypes[3]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -306,7 +353,7 @@ func (x *GinLogRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GinLogRequest.ProtoReflect.Descriptor instead.
 func (*GinLogRequest) Descriptor() ([]byte, []int) {
-	return file_proto_proto_proto_rawDescGZIP(), []int{2}
+	return file_proto_proto_proto_rawDescGZIP(), []int{3}
 }
 
 func (x *GinLogRequest) GetTimestamp() *timestamppb.Timestamp {
@@ -367,7 +414,7 @@ type GinLogResponce struct {
 
 func (x *GinLogResponce) Reset() {
 	*x = GinLogResponce{}
-	mi := &file_proto_proto_proto_msgTypes[3]
+	mi := &file_proto_proto_proto_msgTypes[4]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -379,7 +426,7 @@ func (x *GinLogResponce) String() string {
 func (*GinLogResponce) ProtoMessage() {}
 
 func (x *GinLogResponce) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_proto_proto_msgTypes[3]
+	mi := &file_proto_proto_proto_msgTypes[4]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -392,7 +439,7 @@ func (x *GinLogResponce) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GinLogResponce.ProtoReflect.Descriptor instead.
 func (*GinLogResponce) Descriptor() ([]byte, []int) {
-	return file_proto_proto_proto_rawDescGZIP(), []int{3}
+	return file_proto_proto_proto_rawDescGZIP(), []int{4}
 }
 
 func (x *GinLogResponce) GetStatus() bool {
@@ -406,15 +453,15 @@ var File_proto_proto_proto protoreflect.FileDescriptor
 
 const file_proto_proto_proto_rawDesc = "" +
 	"\n" +
-	"\x11proto/proto.proto\x12\x06grpcPb\x1a\x1fgoogle/protobuf/timestamp.proto\"\xa2\x03\n" +
+	"\x11proto/proto.proto\x12\x06grpcPb\x1a\x1fgoogle/protobuf/timestamp.proto\"\xd5\x03\n" +
 	"\n" +
 	"LogRequest\x122\n" +
 	"\x06action\x18\x01 \x01(\x0e2\x1a.grpcPb.LogRequest.ActionsR\x06action\x122\n" +
 	"\x06method\x18\x02 \x01(\x0e2\x1a.grpcPb.LogRequest.MethodsR\x06method\x12\x16\n" +
-	"\x06userId\x18\x03 \x01(\x05R\x06userId\x12\x1a\n" +
-	"\bobjectId\x18\x04 \x03(\tR\bobjectId\x12\x10\n" +
+	"\x06userId\x18\x03 \x01(\x05R\x06userId\x120\n" +
+	"\bobjectId\x18\x04 \x01(\v2\x0f.grpcPb.massiveH\x00R\bobjectId\x88\x01\x01\x12\x10\n" +
 	"\x03url\x18\x05 \x01(\tR\x03url\x128\n" +
-	"\ttimestamp\x18\x06 \x01(\v2\x1a.google.protobuf.TimestampR\ttimestamp\"y\n" +
+	"\ttimestamp\x18\x06 \x01(\v2\x1a.google.protobuf.TimestampR\ttimestamp\"\x88\x01\n" +
 	"\aActions\x12\n" +
 	"\n" +
 	"\x06SignUp\x10\x00\x12\n" +
@@ -427,13 +474,17 @@ const file_proto_proto_proto_rawDesc = "" +
 	"\tGet_files\x10\x04\x12\f\n" +
 	"\bGet_file\x10\x05\x12\x0f\n" +
 	"\vDelete_file\x10\x06\x12\x10\n" +
-	"\fDelete_files\x10\a\"1\n" +
+	"\fDelete_files\x10\a\x12\r\n" +
+	"\tShow_page\x10\b\"1\n" +
 	"\aMethods\x12\a\n" +
 	"\x03GET\x10\x00\x12\a\n" +
 	"\x03PUT\x10\x01\x12\b\n" +
 	"\x04POST\x10\x02\x12\n" +
 	"\n" +
-	"\x06DELETE\x10\x03\"%\n" +
+	"\x06DELETE\x10\x03B\v\n" +
+	"\t_objectId\"%\n" +
+	"\amassive\x12\x1a\n" +
+	"\bobjectId\x18\x01 \x03(\tR\bobjectId\"%\n" +
 	"\vLogResponce\x12\x16\n" +
 	"\x06status\x18\x01 \x01(\bR\x06status\"\xe9\x01\n" +
 	"\rGinLogRequest\x128\n" +
@@ -466,30 +517,32 @@ func file_proto_proto_proto_rawDescGZIP() []byte {
 }
 
 var file_proto_proto_proto_enumTypes = make([]protoimpl.EnumInfo, 2)
-var file_proto_proto_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
+var file_proto_proto_proto_msgTypes = make([]protoimpl.MessageInfo, 5)
 var file_proto_proto_proto_goTypes = []any{
 	(LogRequest_Actions)(0),       // 0: grpcPb.LogRequest.Actions
 	(LogRequest_Methods)(0),       // 1: grpcPb.LogRequest.Methods
 	(*LogRequest)(nil),            // 2: grpcPb.LogRequest
-	(*LogResponce)(nil),           // 3: grpcPb.LogResponce
-	(*GinLogRequest)(nil),         // 4: grpcPb.GinLogRequest
-	(*GinLogResponce)(nil),        // 5: grpcPb.GinLogResponce
-	(*timestamppb.Timestamp)(nil), // 6: google.protobuf.Timestamp
+	(*Massive)(nil),               // 3: grpcPb.massive
+	(*LogResponce)(nil),           // 4: grpcPb.LogResponce
+	(*GinLogRequest)(nil),         // 5: grpcPb.GinLogRequest
+	(*GinLogResponce)(nil),        // 6: grpcPb.GinLogResponce
+	(*timestamppb.Timestamp)(nil), // 7: google.protobuf.Timestamp
 }
 var file_proto_proto_proto_depIdxs = []int32{
 	0, // 0: grpcPb.LogRequest.action:type_name -> grpcPb.LogRequest.Actions
 	1, // 1: grpcPb.LogRequest.method:type_name -> grpcPb.LogRequest.Methods
-	6, // 2: grpcPb.LogRequest.timestamp:type_name -> google.protobuf.Timestamp
-	6, // 3: grpcPb.GinLogRequest.timestamp:type_name -> google.protobuf.Timestamp
-	2, // 4: grpcPb.LogService.Log:input_type -> grpcPb.LogRequest
-	4, // 5: grpcPb.LogService.GinLog:input_type -> grpcPb.GinLogRequest
-	3, // 6: grpcPb.LogService.Log:output_type -> grpcPb.LogResponce
-	5, // 7: grpcPb.LogService.GinLog:output_type -> grpcPb.GinLogResponce
-	6, // [6:8] is the sub-list for method output_type
-	4, // [4:6] is the sub-list for method input_type
-	4, // [4:4] is the sub-list for extension type_name
-	4, // [4:4] is the sub-list for extension extendee
-	0, // [0:4] is the sub-list for field type_name
+	3, // 2: grpcPb.LogRequest.objectId:type_name -> grpcPb.massive
+	7, // 3: grpcPb.LogRequest.timestamp:type_name -> google.protobuf.Timestamp
+	7, // 4: grpcPb.GinLogRequest.timestamp:type_name -> google.protobuf.Timestamp
+	2, // 5: grpcPb.LogService.Log:input_type -> grpcPb.LogRequest
+	5, // 6: grpcPb.LogService.GinLog:input_type -> grpcPb.GinLogRequest
+	4, // 7: grpcPb.LogService.Log:output_type -> grpcPb.LogResponce
+	6, // 8: grpcPb.LogService.GinLog:output_type -> grpcPb.GinLogResponce
+	7, // [7:9] is the sub-list for method output_type
+	5, // [5:7] is the sub-list for method input_type
+	5, // [5:5] is the sub-list for extension type_name
+	5, // [5:5] is the sub-list for extension extendee
+	0, // [0:5] is the sub-list for field type_name
 }
 
 func init() { file_proto_proto_proto_init() }
@@ -497,13 +550,14 @@ func file_proto_proto_proto_init() {
 	if File_proto_proto_proto != nil {
 		return
 	}
+	file_proto_proto_proto_msgTypes[0].OneofWrappers = []any{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_proto_proto_proto_rawDesc), len(file_proto_proto_proto_rawDesc)),
 			NumEnums:      2,
-			NumMessages:   4,
+			NumMessages:   5,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

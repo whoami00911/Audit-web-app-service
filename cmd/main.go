@@ -32,6 +32,7 @@ func main() {
 
 	db, err := tryMongo()
 	if err != nil {
+		logger.Error(err)
 		log.Fatalf("Can't connect mongodb")
 	}
 
