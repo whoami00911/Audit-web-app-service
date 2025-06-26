@@ -12,6 +12,7 @@ var (
 		"GetFiles":    LogRequest_Get_files,
 		"DeleteFile":  LogRequest_Delete_file,
 		"DeleteFiles": LogRequest_Delete_files,
+		"ShowPage":    LogRequest_Show_page,
 	}
 
 	methods = map[string]LogRequest_Methods{
