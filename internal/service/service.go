@@ -37,8 +37,8 @@ func (s *Service) Log(ctx context.Context, req *grpcPb.LogRequest) (logEntities.
 			}
 			return nil
 		}(),
-		Url:       req.Url,
-		Timestamp: req.GetTimestamp().AsTime().Add(time.Hour * 6).Format("2006-01-02 15:04:05 -07:00 MST"),
+		Url:             req.Url,
+		TimestampString: req.GetTimestamp().AsTime().Add(time.Hour * 6).Format("2006-01-02 15:04:05 -07:00 MST"),
 	}
 
 	status, err := s.Logging.Log(ctx, log)
@@ -56,13 +56,13 @@ func (s *Service) Log(ctx context.Context, req *grpcPb.LogRequest) (logEntities.
 
 func (s *Service) GinLog(ctx context.Context, req *grpcPb.GinLogRequest) (logEntities.Status, error) {
 	ginLog := logEntities.GinLog{
-		Timestamp:  req.GetTimestamp().AsTime().Add(time.Hour * 6).Format("2006-01-02 15:04:05 -07:00 MST"),
-		StatusCode: int(req.StatusCode),
-		Latency:    req.Latency,
-		ClientIp:   req.ClientIp,
-		Method:     req.Method,
-		Path:       req.Path,
-		UserAgent:  req.UserAgent,
+		TimestampString: req.GetTimestamp().AsTime().Add(time.Hour * 6).Format("2006-01-02 15:04:05 -07:00 MST"),
+		StatusCode:      int(req.StatusCode),
+		Latency:         req.Latency,
+		ClientIp:        req.ClientIp,
+		Method:          req.Method,
+		Path:            req.Path,
+		UserAgent:       req.UserAgent,
 	}
 
 	status, err := s.Logging.GinLog(ctx, ginLog)
