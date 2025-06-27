@@ -27,10 +27,15 @@ func InitService(logging Logging, logger *logger.Logger) *Service {
 
 func (s *Service) Log(ctx context.Context, req *grpcPb.LogRequest) (logEntities.Status, error) {
 	log := logEntities.Log{
-		Action:    req.GetAction().String(),
-		Method:    req.GetMethod().String(),
-		UserId:    int(req.GetUserId()),
-		ObjectId:  req.ObjectId.ObjectId,
+		Action: req.GetAction().String(),
+		Method: req.GetMethod().String(),
+		UserId: int(req.GetUserId()),
+		ObjectId: func() []string {
+			if req.ObjectId != nil {
+				return req.ObjectId.ObjectId
+			}
+			return nil
+		}(),
 		Url:       req.Url,
 		Timestamp: req.GetTimestamp().AsTime(),
 	}

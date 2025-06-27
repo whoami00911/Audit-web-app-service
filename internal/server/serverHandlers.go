@@ -2,7 +2,6 @@ package server
 
 import (
 	"context"
-	"log"
 
 	"github.com/whoami00911/Audit-web-app-service/pkg/grpcPb"
 	"github.com/whoami00911/Audit-web-app-service/pkg/logEntities"
@@ -28,7 +27,6 @@ func InitGrpcServerHandlers(logging Logging, logger *logger.Logger) *grpcServerH
 }
 
 func (g *grpcServerHandlers) Log(ctx context.Context, req *grpcPb.LogRequest) (*grpcPb.LogResponce, error) {
-	log.Printf("[Server][Log] got request: %+v", req)
 	status, err := g.Logging.Log(ctx, req)
 	if err != nil {
 		g.logger.Error(err)
@@ -43,7 +41,6 @@ func (g *grpcServerHandlers) Log(ctx context.Context, req *grpcPb.LogRequest) (*
 }
 
 func (g *grpcServerHandlers) GinLog(ctx context.Context, req *grpcPb.GinLogRequest) (*grpcPb.GinLogResponce, error) {
-	log.Printf("[Server][Log] got request: %+v", req)
 	status, err := g.Logging.GinLog(ctx, req)
 	if err != nil {
 		g.logger.Error(err)

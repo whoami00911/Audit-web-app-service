@@ -12,7 +12,7 @@ type Log struct {
 	Action    string    `bson:"action"`
 	Method    string    `bson:"method"`
 	UserId    int       `bson:"userId"`
-	ObjectId  []string  `bson:"objectId"`
+	ObjectId  []string  `bson:"objectId,omitempty"`
 	Url       string    `bson:"url"`
 	Timestamp time.Time `bson:"timestamp"`
 }
